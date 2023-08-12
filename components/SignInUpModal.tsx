@@ -13,9 +13,7 @@ const SignInUpModal = () => {
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle className="text-center mb-5">
-          Sign In to Github Jobs
-        </DialogTitle>
+        <DialogTitle className=" mb-5">Sign In to Github Jobs</DialogTitle>
         <DialogDescription>
           <Tabs defaultValue="jobseeker">
             <TabsList className="grid w-full grid-cols-2 mb-5">

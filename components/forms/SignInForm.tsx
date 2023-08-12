@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
+import { GithubIcon } from "lucide-react";
+import { Separator } from "../ui/separator";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -37,6 +39,19 @@ export function SignInForm() {
 
   return (
     <div>
+      <Button className="w-full" variant="outline" size="lg">
+        <GithubIcon className="  h-4 w-4 mr-1" /> Sign in with github
+      </Button>
+      <div className="relative my-7">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-muted-foreground">
+            Or continue with
+          </span>
+        </div>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
@@ -63,7 +78,9 @@ export function SignInForm() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="w-full">
+            Submit
+          </Button>
         </form>
       </Form>
     </div>
