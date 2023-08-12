@@ -1,5 +1,7 @@
 import { ModeToggle } from "./ModeToggle";
+import SignInUpModal from "./SignInUpModal";
 import { Button } from "./ui/button";
+import { Dialog, DialogTrigger } from "./ui/dialog";
 
 const Navbar = () => {
   return (
@@ -11,7 +13,12 @@ const Navbar = () => {
         <div className="flex-1"></div>
         <div className="flex gap-2">
           <ModeToggle />
-          <Button variant="default">Sign in</Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="default">Sign in</Button>
+            </DialogTrigger>
+            <SignInUpModal />
+          </Dialog>
         </div>
       </div>
     </div>
