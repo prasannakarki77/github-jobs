@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,13 +12,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { GithubIcon } from "lucide-react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { GithubIcon, Loader2 } from "lucide-react";
 import { USER_TYPE, UserType } from "@/types/common";
+import { useToast } from "../ui/use-toast";
+import { ToastAction } from "../ui/toast";
 
 const formSchema = z
   .object({
-    username: z.string().min(3, {
+    name: z.string().min(3, {
       message: "Company Name must be at least 3 characters",
     }),
     email: z.string().min(1, { message: "Email is required" }).email({
@@ -45,15 +46,37 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ role }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      name: "",
       email: "",
       password: "",
       confirm_password: "",
     },
   });
 
-  const onSubmit = () => {
-    console.log("first");
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = form;
+
+  const { toast } = useToast();
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    try {
+      await axios.post("/api/register", data);
+      toast({
+        variant: "default",
+        title: "Registration Successful",
+        description: "You can now sign in to GitHub jobs.",
+      });
+    } catch (err) {
+      toast({
+        variant: "destructive",
+        title: "Registration Failed",
+        description: "Please try again!",
+      });
+    }
   };
 
   if (role == USER_TYPE.jobseeker) {
@@ -67,10 +90,10 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ role }) => {
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <FormField
-            control={form.control}
-            name="username"
+            control={control}
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -81,7 +104,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ role }) => {
             )}
           />
           <FormField
-            control={form.control}
+            control={control}
             name="email"
             render={({ field }) => (
               <FormItem>
@@ -93,7 +116,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ role }) => {
             )}
           />
           <FormField
-            control={form.control}
+            control={control}
             name="password"
             render={({ field }) => (
               <FormItem>
@@ -105,7 +128,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ role }) => {
             )}
           />
           <FormField
-            control={form.control}
+            control={control}
             name="confirm_password"
             render={({ field }) => (
               <FormItem>
@@ -120,7 +143,8 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ role }) => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Submit
           </Button>
         </form>
