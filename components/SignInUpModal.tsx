@@ -1,4 +1,3 @@
-import { Dialog } from "@radix-ui/react-dialog";
 import React from "react";
 import {
   DialogContent,
@@ -6,8 +5,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
-import { SignInForm } from "./forms/SignInForm";
+import { SignUpForm } from "./forms/SignUpForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { USER_TYPE } from "@/types/common";
 
 const SignInUpModal = () => {
   return (
@@ -21,10 +21,10 @@ const SignInUpModal = () => {
               <TabsTrigger value="employer">Employer</TabsTrigger>
             </TabsList>
             <TabsContent value="jobseeker">
-              <SignInForm />
+              <SignUpForm role={USER_TYPE.jobseeker} />
             </TabsContent>
             <TabsContent value="employer">
-              Change your password here.
+              <SignUpForm role={USER_TYPE.employer} />
             </TabsContent>
           </Tabs>
         </DialogDescription>

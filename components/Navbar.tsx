@@ -15,7 +15,13 @@ const Navbar = () => {
           <ModeToggle />
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="default">Sign in</Button>
+              <Button variant="default">Log in</Button>
+            </DialogTrigger>
+            <SignInUpModal />
+          </Dialog>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline">Sign Up</Button>
             </DialogTrigger>
             <SignInUpModal />
           </Dialog>
