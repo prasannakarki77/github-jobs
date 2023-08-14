@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,7 +17,7 @@ import { GithubIcon, Loader2 } from "lucide-react";
 import { USER_TYPE, UserType } from "@/types/common";
 import { useToast } from "../ui/use-toast";
 import { ToastAction } from "../ui/toast";
-
+import { signIn } from "next-auth/react";
 const formSchema = z
   .object({
     name: z.string().min(3, {
@@ -70,10 +70,10 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ role }) => {
         title: "Registration Successful",
         description: "You can now sign in to GitHub jobs.",
       });
-    } catch (err) {
+    } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Registration Failed",
+        title: error.response.data.message ?? "Registration Failed",
         description: "Please try again!",
       });
     }
@@ -81,7 +81,12 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ role }) => {
 
   if (role == USER_TYPE.jobseeker) {
     return (
-      <Button className="w-full" variant="default" size="lg">
+      <Button
+        className="w-full"
+        variant="default"
+        size="lg"
+        onClick={() => signIn("github")}
+      >
         <GithubIcon className="  h-4 w-4 mr-1" /> Sign in with github
       </Button>
     );
