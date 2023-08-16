@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,10 +16,8 @@ import { GithubIcon, Loader2 } from "lucide-react";
 import { USER_TYPE, UserType } from "@/types/common";
 import { useToast } from "../ui/use-toast";
 import { signIn } from "next-auth/react";
-import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
 import useSignInUpModal from "@/app/hooks/useSignInUpModal";
-import { Separator } from "../ui/separator";
 const formSchema = z.object({
   email: z.string().min(1, { message: "Email is required" }).email({
     message: "Must be a valid email",

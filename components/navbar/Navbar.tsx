@@ -1,8 +1,6 @@
 "use client";
-import { useState } from "react";
 import { ModeToggle } from "../ModeToggle";
 import { Button } from "../ui/button";
-import { Dialog, DialogTrigger } from "../ui/dialog";
 import SignInUpModal from "./SignInUpModal";
 import UserMenu from "./UserMenu";
 import { SafeUser } from "@/types/prisma";

@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,7 +16,6 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { GithubIcon, Loader2 } from "lucide-react";
 import { USER_TYPE, UserType } from "@/types/common";
 import { useToast } from "../ui/use-toast";
-import { ToastAction } from "../ui/toast";
 import { signIn } from "next-auth/react";
 import useSignInUpModal from "@/app/hooks/useSignInUpModal";
 const formSchema = z

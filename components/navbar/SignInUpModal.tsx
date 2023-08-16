@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,7 +11,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { USER_TYPE } from "@/types/common";
 import { SignInForm } from "../forms/SignInForm";
 import useSignInUpModal from "@/app/hooks/useSignInUpModal";
-import { Button } from "../ui/button";
 
 const SignInUpModal = () => {
   const { open, setOpen, modalFor } = useSignInUpModal();
