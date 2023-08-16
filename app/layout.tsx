@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import getCurrentUser from "./actions/getCurrentUser";
+import ClientOnly from "@/components/ClientOnly";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,9 +22,12 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className} min-h-screen bg-background font-sans>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar currentUser={currentUser} />
-          <main>{children}</main>
-          <Toaster />
+          <ClientOnly>
+            <Navbar currentUser={currentUser} />
+
+            <main>{children}</main>
+            <Toaster />
+          </ClientOnly>
         </ThemeProvider>
       </body>
     </html>
