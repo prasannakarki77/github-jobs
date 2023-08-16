@@ -17,6 +17,8 @@ import { GithubIcon, Loader2 } from "lucide-react";
 import { USER_TYPE, UserType } from "@/types/common";
 import { useToast } from "../ui/use-toast";
 import { signIn } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
 const formSchema = z.object({
   email: z.string().min(1, { message: "Email is required" }).email({
     message: "Must be a valid email",
@@ -45,19 +47,32 @@ export const SignInForm: React.FC<SignInFormProps> = ({ role }) => {
   } = form;
 
   const { toast } = useToast();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      await axios.post("/api/register", data);
-      toast({
-        variant: "default",
-        title: "Registration Successful",
-        description: "You can now sign in to GitHub jobs.",
+      const callback = await signIn("credentials", {
+        ...data,
+        redirect: false,
       });
+      if (callback?.ok) {
+        toast({
+          variant: "default",
+          title: "Logged In",
+        });
+        router.refresh();
+      }
+      if (callback?.error) {
+        toast({
+          variant: "destructive",
+          title: callback.error,
+          description: "Please try again!",
+        });
+      }
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: error.response.data.message ?? "Registration Failed",
+        title: "Sign In Failed",
         description: "Please try again!",
       });
     }
