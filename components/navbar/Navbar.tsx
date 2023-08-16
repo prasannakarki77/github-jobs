@@ -1,7 +1,8 @@
-import { ModeToggle } from "./ModeToggle";
-import SignInUpModal from "./SignInUpModal";
-import { Button } from "./ui/button";
-import { Dialog, DialogTrigger } from "./ui/dialog";
+import { ModeToggle } from "../ModeToggle";
+import SignInUpModal from "../SignInUpModal";
+import { Button } from "../ui/button";
+import { Dialog, DialogTrigger } from "../ui/dialog";
+import UserMenu from "./UserMenu";
 
 const Navbar = () => {
   return (
@@ -13,6 +14,7 @@ const Navbar = () => {
         <div className="flex-1"></div>
         <div className="flex gap-2">
           <ModeToggle />
+          <UserMenu />
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="default">Log in</Button>
