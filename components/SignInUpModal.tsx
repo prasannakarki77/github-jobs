@@ -8,12 +8,19 @@ import {
 import { SignUpForm } from "./forms/SignUpForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { USER_TYPE } from "@/types/common";
+import { SignInForm } from "./forms/SignInForm";
 
-const SignInUpModal = () => {
+interface Props {
+  modalFor: "sign-in" | "sign-up";
+}
+
+const SignInUpModal: React.FC<Props> = ({ modalFor }) => {
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle className=" mb-5">Sign In to Github Jobs</DialogTitle>
+        <DialogTitle className=" mb-5">{`Sign ${
+          modalFor === "sign-in" ? "In" : "Up"
+        }  to Github Jobs`}</DialogTitle>
         <DialogDescription>
           <Tabs defaultValue="jobseeker">
             <TabsList className="grid w-full grid-cols-2 mb-5">
@@ -21,10 +28,18 @@ const SignInUpModal = () => {
               <TabsTrigger value="employer">Employer</TabsTrigger>
             </TabsList>
             <TabsContent value="jobseeker">
-              <SignUpForm role={USER_TYPE.jobseeker} />
+              {modalFor == "sign-up" ? (
+                <SignUpForm role={USER_TYPE.jobseeker} />
+              ) : (
+                <SignInForm role={USER_TYPE.jobseeker} />
+              )}
             </TabsContent>
             <TabsContent value="employer">
-              <SignUpForm role={USER_TYPE.employer} />
+              {modalFor == "sign-up" ? (
+                <SignUpForm role={USER_TYPE.employer} />
+              ) : (
+                <SignInForm role={USER_TYPE.employer} />
+              )}
             </TabsContent>
           </Tabs>
         </DialogDescription>

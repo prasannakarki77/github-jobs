@@ -53,6 +53,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   postings      Posting[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime? @updatedAt
 }
 
 model VerificationToken {

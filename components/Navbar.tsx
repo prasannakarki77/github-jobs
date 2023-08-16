@@ -17,13 +17,13 @@ const Navbar = () => {
             <DialogTrigger asChild>
               <Button variant="default">Log in</Button>
             </DialogTrigger>
-            <SignInUpModal />
+            <SignInUpModal modalFor={"sign-in"} />
           </Dialog>
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline">Sign Up</Button>
             </DialogTrigger>
-            <SignInUpModal />
+            <SignInUpModal modalFor={"sign-up"} />
           </Dialog>
         </div>
       </div>
