@@ -1,15 +1,24 @@
+"use client";
+import { useState } from "react";
 import { ModeToggle } from "../ModeToggle";
-import SignInUpModal from "../SignInUpModal";
 import { Button } from "../ui/button";
 import { Dialog, DialogTrigger } from "../ui/dialog";
+import SignInUpModal from "./SignInUpModal";
 import UserMenu from "./UserMenu";
 import { SafeUser } from "@/types/prisma";
+import { SignInUpModalType } from "@/types/common";
+import useSignInUpModal from "@/app/hooks/useSignInUpModal";
 
 interface NavbarProps {
   currentUser?: SafeUser | null;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
+  const { setOpen, setModalFor } = useSignInUpModal();
+  const handleModalOpen = (modal: SignInUpModalType) => {
+    setOpen(true);
+    setModalFor(modal);
+  };
   return (
     <div className=" sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur  ">
       <div className=" container flex h-14 items-center  ">
@@ -23,18 +32,19 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             <UserMenu currentUser={currentUser} />
           ) : (
             <>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="default">Log in</Button>
-                </DialogTrigger>
-                <SignInUpModal modalFor={"sign-in"} />
-              </Dialog>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline">Sign Up</Button>
-                </DialogTrigger>
-                <SignInUpModal modalFor={"sign-up"} />
-              </Dialog>
+              <Button
+                variant="default"
+                onClick={() => handleModalOpen("sign-in")}
+              >
+                Log in
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => handleModalOpen("sign-up")}
+              >
+                Sign Up
+              </Button>
+              <SignInUpModal />
             </>
           )}
         </div>

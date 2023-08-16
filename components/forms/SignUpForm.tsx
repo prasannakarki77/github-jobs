@@ -18,6 +18,7 @@ import { USER_TYPE, UserType } from "@/types/common";
 import { useToast } from "../ui/use-toast";
 import { ToastAction } from "../ui/toast";
 import { signIn } from "next-auth/react";
+import useSignInUpModal from "@/app/hooks/useSignInUpModal";
 const formSchema = z
   .object({
     name: z.string().min(3, {
@@ -43,6 +44,7 @@ interface SignUpFormProps {
 }
 
 export const SignUpForm: React.FC<SignUpFormProps> = ({ role }) => {
+  const { setModalFor, setOpen } = useSignInUpModal();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,6 +59,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ role }) => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { isSubmitting },
   } = form;
 
@@ -70,6 +73,8 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ role }) => {
         title: "Registration Successful",
         description: "You can now sign in to GitHub jobs.",
       });
+      reset();
+      setOpen(false);
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -154,6 +159,12 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ role }) => {
           </Button>
         </form>
       </Form>
+      <div className=" flex items-center justify-center mt-3">
+        Already have an account ?
+        <Button variant={"link"} onClick={() => setModalFor("sign-in")}>
+          Sign In
+        </Button>
+      </div>
     </div>
   );
 };

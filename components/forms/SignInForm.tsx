@@ -19,6 +19,8 @@ import { useToast } from "../ui/use-toast";
 import { signIn } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
+import useSignInUpModal from "@/app/hooks/useSignInUpModal";
+import { Separator } from "../ui/separator";
 const formSchema = z.object({
   email: z.string().min(1, { message: "Email is required" }).email({
     message: "Must be a valid email",
@@ -32,6 +34,8 @@ interface SignInFormProps {
 }
 
 export const SignInForm: React.FC<SignInFormProps> = ({ role }) => {
+  const { setModalFor, setOpen } = useSignInUpModal();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -61,6 +65,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ role }) => {
           title: "Logged In",
         });
         router.refresh();
+        setOpen(false);
       }
       if (callback?.error) {
         toast({
@@ -125,6 +130,12 @@ export const SignInForm: React.FC<SignInFormProps> = ({ role }) => {
           </Button>
         </form>
       </Form>
+      <div className=" flex items-center justify-center mt-3">
+        Don&apos;t have an account ?
+        <Button variant={"link"} onClick={() => setModalFor("sign-up")}>
+          Sign Up
+        </Button>
+      </div>
     </div>
   );
 };
