@@ -14,7 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { signOut } from "next-auth/react";
 import { SafeUser } from "@/types/prisma";
 import { getInitials } from "@/lib/utils";
-
+import Link from "next/link";
 interface UserMenuProps {
   currentUser?: SafeUser | null;
 }
@@ -41,6 +41,14 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuGroup>
+          <Link href="/posts">
+            <DropdownMenuItem>
+              <User className="mr-2 h-4 w-4" />
+              <span>Job Postings</span>
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()}>
