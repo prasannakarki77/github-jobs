@@ -1,5 +1,7 @@
+"use client";
 import { Editor } from "@tinymce/tinymce-react";
 import React, { Dispatch, useEffect, useState } from "react";
+import ClientOnly from "../ClientOnly";
 type EditorPropTypes = {
   content: string;
   setContent: Dispatch<React.SetStateAction<string>>;
@@ -10,6 +12,7 @@ export default function CustomTinyEditor({
   setContent,
 }: EditorPropTypes) {
   const [loaded, setLoaded] = useState<boolean>(false);
+
   useEffect(() => {
     setLoaded(true);
   }, []);
@@ -17,7 +20,7 @@ export default function CustomTinyEditor({
     return (
       <>
         <Editor
-          apiKey="dnah530qk9ufsn53qibajfi7jsxrz2rxbo9tlm23zv0ak23m"
+          apiKey={process.env.TINY_MCE_API_KEY}
           value={content}
           onEditorChange={(content: string) => {
             setContent(content);

@@ -15,7 +15,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import CustomTinyEditor from "./CustomTinyEditor";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -65,11 +65,21 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
     handleSubmit,
     control,
     register,
+    setValue,
+    trigger,
     formState: { isSubmitting },
   } = form;
 
-  const onSubmit = () => {
-    new Promise((resolve) => setTimeout(resolve, 1000));
+  useEffect(() => {
+    setValue("description", description);
+    if (description !== "") {
+      trigger("description");
+    }
+  }, [description]);
+
+  const onSubmit = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+    window.alert("done");
   };
   return (
     <div>
@@ -185,11 +195,14 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
               </FormItem>
             )}
           />
-
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Submit
-          </Button>
+          <div className="flex justify-end">
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Submit
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
