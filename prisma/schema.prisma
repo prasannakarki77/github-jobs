@@ -71,10 +71,9 @@ model Posting {
   title       String
   description String
   location    String
-  duration    String
-  salary      String
+  duration    String?
   userId      String 
+  expiresAt   DateTime?
   createdAt   DateTime @default(now())
-  user        User @relation(fields: [userId], references: [id])
-  @@unique([userId])
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

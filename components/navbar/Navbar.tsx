@@ -6,7 +6,7 @@ import UserMenu from "./UserMenu";
 import { SafeUser } from "@/types/prisma";
 import { SignInUpModalType } from "@/types/common";
 import useSignInUpModal from "@/app/hooks/useSignInUpModal";
-
+import Link from "next/link";
 interface NavbarProps {
   currentUser?: SafeUser | null;
 }
@@ -20,9 +20,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   return (
     <div className=" sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur  ">
       <div className=" container flex h-14 items-center  ">
-        <h1 className="text-xl">
-          <span className=" font-bold text-2xl ">Github </span>Jobs
-        </h1>
+        <Link href="/">
+          <h1 className="text-xl">
+            <span className=" font-bold text-2xl ">Github </span>Jobs
+          </h1>
+        </Link>
         <div className="flex-1"></div>
         <div className="flex gap-2">
           <ModeToggle />
