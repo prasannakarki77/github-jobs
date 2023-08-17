@@ -25,13 +25,12 @@ export default function CustomTinyEditor({
           init={{
             skin: "snow",
             icons: "thin",
-            placeholder: "Ask a question or post an update...",
+            placeholder: "Write job description..",
             height: 400,
             menubar: true,
-            plugins:
-              "anchor codesample autolink charmap emoticons image link lists media searchreplace table visualblocks wordcount   pageembed linkchecker    powerpaste advtable advcode editimage tableofcontents footnotes mergetags autocorrect typography ",
+            plugins: " accordion lists advlist anchor preview ",
             toolbar:
-              "undo redo | blocks fontfamily fontsize | align lineheight checklist numlist bullist codesample | bold italic underline strikethrough | link image media table mergetags charmap ",
+              "preview | undo redo | blocks fontfamily fontsize | align lineheight checklist numlist bullist codesample | bold italic underline strikethrough | link image media table mergetags charmap ",
           }}
         />
       </>

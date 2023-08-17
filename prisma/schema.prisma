@@ -72,7 +72,6 @@ model Posting {
   description String
   location    String
   duration    String?
-  salary      String?
   userId      String 
   expiresAt   DateTime?
   createdAt   DateTime @default(now())

@@ -1,14 +1,41 @@
+"use client";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Posting } from "@prisma/client";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { CalendarIcon, Loader2 } from "lucide-react";
+import CustomTinyEditor from "./CustomTinyEditor";
+import { useState } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { Calendar } from "../ui/calendar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 interface JobPostingFormProps {
   isEdit?: boolean;
-  jobPosting?: Posting;
+  post?: Posting;
 }
 
-const JobPostingForm: React.FC<JobPostingFormProps> = ({
-  isEdit,
-  jobPosting,
-}) => {
+const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
+  const [description, set_description] = useState<string>(
+    post?.description || ""
+  );
   const formSchema = z.object({
     title: z.string().min(4, {
       message: "Title must be at least 4 characters long",
@@ -22,9 +49,151 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({
     duration: z.string().min(1, {
       message: "Duration must be specified",
     }),
-    salary: z.number(),
+    expiresAt: z.date(),
   });
-  return <div>JobPostingForm</div>;
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: post?.title || "",
+      description: post?.description || "",
+      location: post?.location || "",
+      duration: post?.duration || "",
+    },
+  });
+
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { isSubmitting },
+  } = form;
+
+  const onSubmit = () => {
+    new Promise((resolve) => setTimeout(resolve, 1000));
+  };
+  return (
+    <div>
+      <Form {...form}>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <div className="md:grid md:grid-cols-2 gap-6">
+            <FormField
+              control={control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Job Title" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Location</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Location" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="duration"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Duration</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={post?.duration || field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select job duration" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="full-time">Full time</SelectItem>
+                      <SelectItem value="part-time">Part Time</SelectItem>
+                      <SelectItem value="contract">Contract</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="expiresAt"
+              render={({ field }) => (
+                <FormItem className="flex flex-col gap-[0.8]">
+                  <FormLabel className="mt-2">Deadline</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            " pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) => date < new Date()}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <FormField
+            control={control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <CustomTinyEditor
+                    {...field}
+                    content={description}
+                    setContent={set_description}
+                    {...register("description")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Submit
+          </Button>
+        </form>
+      </Form>
+    </div>
+  );
 };
 
 export default JobPostingForm;

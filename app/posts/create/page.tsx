@@ -1,5 +1,4 @@
 import JobPostingForm from "@/components/forms/JobPostingForm";
-import { SidebarNav } from "../components/SidebarNav";
 
 const CreateJobPosting = () => {
   return (
