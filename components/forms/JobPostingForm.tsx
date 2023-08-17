@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Posting } from "@prisma/client";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import {
   Form,
@@ -27,6 +27,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useToast } from "../ui/use-toast";
+import axios from "axios";
 interface JobPostingFormProps {
   isEdit?: boolean;
   post?: Posting;
@@ -66,6 +68,7 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
     control,
     register,
     setValue,
+    reset,
     trigger,
     formState: { isSubmitting },
   } = form;
@@ -77,9 +80,24 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
     }
   }, [description]);
 
-  const onSubmit = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    window.alert("done");
+  const { toast } = useToast();
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    try {
+      await axios.post("/api/posts", data);
+      toast({
+        variant: "default",
+        title: "Jop Posted  Successful",
+        description: "You can now sign in to GitHub jobs.",
+      });
+      reset();
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: error.response.data.message ?? "Posting Failed",
+        description: "Please try again!",
+      });
+    }
   };
   return (
     <div>
