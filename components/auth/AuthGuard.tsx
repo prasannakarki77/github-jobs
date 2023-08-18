@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from "../Loader";
+import Forbidden403 from "../Forbidden403";
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -34,7 +35,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
     if (pathname !== requestedLocation) {
       setRequestedLocation(pathname);
     }
-    return <NotFound />;
+    return <Forbidden403 />;
   }
 
   return <>{children}</>;
