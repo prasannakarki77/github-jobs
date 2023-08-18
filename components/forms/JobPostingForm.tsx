@@ -136,13 +136,10 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Duration</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={post?.duration || field.value}
-                  >
+                  <Select onValueChange={field.onChange}>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select job duration" />
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select duration" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -155,6 +152,7 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="expiresAt"

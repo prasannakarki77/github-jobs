@@ -1,7 +1,7 @@
 "use client";
 import { Editor } from "@tinymce/tinymce-react";
 import React, { Dispatch, useEffect, useState } from "react";
-import ClientOnly from "../ClientOnly";
+import Loader from "../Loader";
 type EditorPropTypes = {
   content: string;
   setContent: Dispatch<React.SetStateAction<string>>;
@@ -39,6 +39,6 @@ export default function CustomTinyEditor({
       </>
     );
   } else {
-    return <h2> Editor is loading </h2>;
+    return <Loader />;
   }
 }
