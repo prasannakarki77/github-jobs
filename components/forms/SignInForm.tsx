@@ -32,7 +32,6 @@ interface SignInFormProps {
 
 export const SignInForm: React.FC<SignInFormProps> = ({ role }) => {
   const { setModalFor, setOpen } = useSignInUpModal();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
