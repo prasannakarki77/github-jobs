@@ -1,5 +1,4 @@
 "use client";
-import NotFound from "@/app/not-found";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
