@@ -6,8 +6,16 @@ export default async function getPosts() {
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        user: true,
+      },
     });
-    return posts;
+    const safePosts = posts.map((post) => ({
+      ...post,
+      createdAt: post.createdAt.toISOString(),
+      expiresAt: post.expiresAt?.toISOString(),
+    }));
+    return safePosts;
   } catch (error: any) {
     throw new Error(error);
   }

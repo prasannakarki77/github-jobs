@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
 import getPosts from "./actions/getPosts";
 import ClientOnly from "@/components/ClientOnly";
 import EmptyState from "@/components/EmptyState";
+import JobPostCard from "@/components/JobPostCard";
 
 export default async function Home() {
   const posts = await getPosts();
@@ -14,9 +14,11 @@ export default async function Home() {
   }
   return (
     <main className="in-h-screen">
-      {posts.map((post) => {
-        return <h1 key={post.id}>{post.title}</h1>;
-      })}
+      <div className="flex flex-col gap-4">
+        {posts.map((post) => {
+          return <JobPostCard key={post.id} post={post} />;
+        })}
+      </div>
     </main>
   );
 }
