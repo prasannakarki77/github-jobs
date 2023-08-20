@@ -12,8 +12,8 @@ interface JobPostCardProps {
 const JobPostCard: React.FC<JobPostCardProps> = ({ post }) => {
   const { id, user, title, description, createdAt, duration, location } = post;
   return (
-    <Card className="flex gap-2">
-      <div className=" bg-gray-300 dark:bg-slate-800 w-20 ">
+    <Card className="flex gap-3 p-3">
+      <div className=" bg-gray-300 dark:bg-slate-800 w-20 rounded-sm ">
         {user.image ? (
           <Image
             src={user.image}
@@ -28,7 +28,7 @@ const JobPostCard: React.FC<JobPostCardProps> = ({ post }) => {
           </p>
         )}
       </div>
-      <div className=" flex gap-1 flex-1 p-3 sm:flex-row flex-col">
+      <div className=" flex gap-1 flex-1  sm:flex-row flex-col">
         <div className=" flex flex-col gap-2 items-start">
           <p className="font-bold text-sm">{user.name}</p>
           <h2 className=" font-semibold text-slate-800 dark:text-white">

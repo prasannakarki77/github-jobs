@@ -13,12 +13,12 @@ export default async function Home() {
     );
   }
   return (
-    <main className="in-h-screen">
+    <ClientOnly>
       <div className="flex flex-col gap-4">
         {posts.map((post) => {
           return <JobPostCard key={post.id} post={post} />;
         })}
       </div>
-    </main>
+    </ClientOnly>
   );
 }

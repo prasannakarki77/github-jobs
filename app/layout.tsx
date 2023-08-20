@@ -26,7 +26,7 @@ export default async function RootLayout({
             <Navbar currentUser={currentUser} />
             <Toaster />
           </ClientOnly>
-          <main className="container">{children}</main>
+          <main className=" m-6  md:my-8 md:container">{children}</main>
         </ThemeProvider>
       </body>
     </html>

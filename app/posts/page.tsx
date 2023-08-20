@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const Posts = () => {
   return (
-    <div className="container my-5">
+    <div className=" ">
       <Link href="/posts/create">Create Job posting</Link>
     </div>
   );
