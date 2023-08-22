@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronDown, Eye, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -35,48 +35,104 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { SafePost } from "@/types/prisma";
+import { fDate } from "@/lib/utils";
 
 export const columns: ColumnDef<SafePost>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        // <Button
+        //   variant="ghost"
+        //   onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        // >
+        //   Email
+        //   <ArrowUpDown className="ml-2 h-4 w-4" />
+        // </Button>
+        <div className="text-left">Title</div>
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("title")}</div>
+      <div className="text-left font-medium">{row.getValue("title")}</div>
+    ),
+  },
+  {
+    accessorKey: "description",
+    header: ({ column }) => {
+      return <div className="text-left">Description</div>;
+    },
+    cell: ({ row }) => (
+      <Button variant={"outline"} size={"sm"}>
+        <Eye size={15} className=" mr-2" /> View
+      </Button>
     ),
   },
   {
     accessorKey: "location",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Location
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        // <Button
+        //   variant="ghost"
+        //   onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        // >
+        //   Location
+        //   <ArrowUpDown className="ml-2 h-4 w-4" />
+        // </Button>
+        <div className="text-left">Location</div>
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("location")}</div>
+      <div className="text-left font-medium">{row.getValue("location")}</div>
     ),
   },
   {
     accessorKey: "duration",
-    header: () => <div className="text-right">Duration</div>,
+    header: () => <div className="text-left">Duration</div>,
     cell: ({ row }) => {
       return (
-        <div className="text-right font-medium">{row.getValue("duration")}</div>
+        <div className="text-left font-medium">{row.getValue("duration")}</div>
+      );
+    },
+  },
+  {
+    accessorKey: "expiresAt",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Expires At
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <div className="text-left font-medium">
+          {fDate(row.getValue("expiresAt"))}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Creatded At
+          <ArrowUpDown className="ml-2 h-4 w-4 " />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <div className="text-left font-medium">
+          {fDate(row.getValue("createdAt"))}
+        </div>
       );
     },
   },
