@@ -206,27 +206,54 @@ export function DataTable({ data }: Props) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
+              Duration <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
+            <DropdownMenuCheckboxItem
+              className="capitalize"
+              checked={
+                table.getColumn("duration")?.getFilterValue() == undefined
+              }
+              onCheckedChange={(value) =>
+                table.getColumn("duration")?.setFilterValue(undefined)
+              }
+            >
+              All
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              className="capitalize"
+              checked={
+                table.getColumn("duration")?.getFilterValue() == "Part Time"
+              }
+              onCheckedChange={(value) =>
+                table.getColumn("duration")?.setFilterValue("Part Time")
+              }
+            >
+              Part Time
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              className="capitalize"
+              checked={
+                table.getColumn("duration")?.getFilterValue() == "Full Time"
+              }
+              onCheckedChange={(value) =>
+                table.getColumn("duration")?.setFilterValue("Full Time")
+              }
+            >
+              Full Time
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              className="capitalize"
+              checked={
+                table.getColumn("duration")?.getFilterValue() == "Contract"
+              }
+              onCheckedChange={(value) =>
+                table.getColumn("duration")?.setFilterValue("Contract")
+              }
+            >
+              Contract
+            </DropdownMenuCheckboxItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
