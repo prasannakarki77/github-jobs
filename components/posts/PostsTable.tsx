@@ -90,7 +90,9 @@ export const columns: ColumnDef<SafePost>[] = [
     header: () => <div className="text-left">Duration</div>,
     cell: ({ row }) => {
       return (
-        <div className="text-left font-medium">{row.getValue("duration")}</div>
+        <div className="text-left font-medium capitalize">
+          {row.getValue("duration")}
+        </div>
       );
     },
   },
@@ -193,15 +195,15 @@ export function DataTable({ data }: Props) {
   });
 
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4">
+    <div className="w-full ">
+      <div className="flex items-center px-3 py-4 bg-secondary  rounded-t-xl ">
         <Input
           placeholder="Filter titles..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm focus-visible:ring-0 focus-visible:ring-offset-0 "
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -224,10 +226,10 @@ export function DataTable({ data }: Props) {
             <DropdownMenuCheckboxItem
               className="capitalize"
               checked={
-                table.getColumn("duration")?.getFilterValue() == "Part Time"
+                table.getColumn("duration")?.getFilterValue() == "part-time"
               }
               onCheckedChange={(value) =>
-                table.getColumn("duration")?.setFilterValue("Part Time")
+                table.getColumn("duration")?.setFilterValue("part-time")
               }
             >
               Part Time
@@ -235,10 +237,10 @@ export function DataTable({ data }: Props) {
             <DropdownMenuCheckboxItem
               className="capitalize"
               checked={
-                table.getColumn("duration")?.getFilterValue() == "Full Time"
+                table.getColumn("duration")?.getFilterValue() == "full-time"
               }
               onCheckedChange={(value) =>
-                table.getColumn("duration")?.setFilterValue("Full Time")
+                table.getColumn("duration")?.setFilterValue("full-time")
               }
             >
               Full Time
@@ -246,10 +248,10 @@ export function DataTable({ data }: Props) {
             <DropdownMenuCheckboxItem
               className="capitalize"
               checked={
-                table.getColumn("duration")?.getFilterValue() == "Contract"
+                table.getColumn("duration")?.getFilterValue() == "contract"
               }
               onCheckedChange={(value) =>
-                table.getColumn("duration")?.setFilterValue("Contract")
+                table.getColumn("duration")?.setFilterValue("contract")
               }
             >
               Contract
@@ -257,7 +259,7 @@ export function DataTable({ data }: Props) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className=" border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
