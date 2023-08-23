@@ -2,7 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import getPosts from "../actions/getPosts";
 import { DataTable } from "@/components/posts/PostsTable";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { PlusIcon } from "lucide-react";
