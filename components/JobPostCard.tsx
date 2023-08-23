@@ -34,7 +34,7 @@ const JobPostCard: React.FC<JobPostCardProps> = ({ post }) => {
           <h2 className=" font-semibold text-slate-800 dark:text-white">
             {title}
           </h2>
-          <Badge variant="secondary" className=" rounded">
+          <Badge variant="secondary" className=" capitalize rounded">
             {duration}
           </Badge>
         </div>

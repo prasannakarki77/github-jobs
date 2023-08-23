@@ -16,11 +16,11 @@ export default async function Home() {
   return (
     <ClientOnly>
       <div className=" ">
-        <div className=" mb-4 bg-search-bg h-40 flex justify-center items-center px-10 ">
+        <div className=" mb-6 bg-search-bg h-40 flex justify-center items-center px-10 ">
           <SearchBar />
         </div>
 
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-4">
           {posts.map((post) => {
             return <JobPostCard key={post.id} post={post} />;
           })}
