@@ -22,13 +22,15 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} min-h-screen bg-background font-sans>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ClientOnly>
-            <Navbar currentUser={currentUser} />
-            <Toaster />
-          </ClientOnly>
-          <main className=" m-6  md:my-8 md:container">{children}</main>
-        </ThemeProvider>
+        <Provider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <ClientOnly>
+              <Navbar currentUser={currentUser} />
+              <Toaster />
+            </ClientOnly>
+            <main className=" m-6  md:my-8 md:container">{children}</main>
+          </ThemeProvider>
+        </Provider>
       </body>
     </html>
   );

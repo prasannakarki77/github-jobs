@@ -7,7 +7,6 @@ import Forbidden403 from "../Forbidden403";
 
 interface AuthGuardProps {
   children: React.ReactNode;
-  roleGuard?: boolean;
 }
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
@@ -34,7 +33,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
     if (pathname !== requestedLocation) {
       setRequestedLocation(pathname);
     }
-    return <Forbidden403 />;
+    return <Forbidden403 hideSignIn={false} />;
   }
 
   return <>{children}</>;
