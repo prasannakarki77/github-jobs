@@ -5,7 +5,11 @@ import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import useSignInUpModal from "@/app/hooks/useSignInUpModal";
-const Forbidden403 = () => {
+
+interface ForbiddenProps {
+  hideSignIn?: boolean;
+}
+const Forbidden403 = ({ hideSignIn }: ForbiddenProps) => {
   const { setOpen, setModalFor } = useSignInUpModal();
   const handleSignIn = () => {
     setOpen(true);
@@ -18,9 +22,11 @@ const Forbidden403 = () => {
         <Link href="/" className={cn(buttonVariants({ variant: "outline" }))}>
           Return to Home
         </Link>
-        <Button onClick={handleSignIn} variant={"secondary"}>
-          Sign in
-        </Button>
+        {!hideSignIn && (
+          <Button onClick={handleSignIn} variant={"secondary"}>
+            Sign in
+          </Button>
+        )}
       </div>
     </div>
   );
