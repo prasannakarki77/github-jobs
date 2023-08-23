@@ -20,7 +20,7 @@ export default function CustomTinyEditor({
     return (
       <>
         <Editor
-          apiKey={process.env.TINY_MCE_API_KEY}
+          apiKey={process.env.NEXT_PUBLIC_TINY_MCE_API_KEY}
           value={content}
           onEditorChange={(content: string) => {
             setContent(content);
