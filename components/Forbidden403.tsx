@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 import useSignInUpModal from "@/app/hooks/useSignInUpModal";
 
 interface ForbiddenProps {
-  hideSignIn: boolean;
+  hideSignIn?: boolean;
 }
-const Forbidden403 = ({ hideSignIn = false }: ForbiddenProps) => {
+const Forbidden403 = ({ hideSignIn }: ForbiddenProps) => {
   const { setOpen, setModalFor } = useSignInUpModal();
   const handleSignIn = () => {
     setOpen(true);
