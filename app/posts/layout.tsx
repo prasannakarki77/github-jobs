@@ -5,5 +5,5 @@ export default function PostsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <RoleBasedGuard role="EMPLOYER">{children}</RoleBasedGuard>;
+  return <>{children}</>;
 }
