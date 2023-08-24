@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import getCurrentUser from "./actions/getCurrentUser";
 import ClientOnly from "@/components/ClientOnly";
-import Provider from "@/app/components/Provider";
+import Provider from "@/components/Provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

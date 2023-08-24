@@ -6,7 +6,7 @@ import { SafeUser } from "@/types/prisma";
 import { SignInUpModalType } from "@/types/common";
 import useSignInUpModal from "@/app/hooks/useSignInUpModal";
 import Link from "next/link";
-import { ModeToggle } from "@/app/ModeToggle";
+import { ModeToggle } from "@/components/ModeToggle";
 interface NavbarProps {
   currentUser?: SafeUser | null;
 }

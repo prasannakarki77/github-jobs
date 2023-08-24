@@ -1,7 +1,12 @@
 "use client";
 import { SessionProvider } from "next-auth/react";
+import ClientOnly from "./ClientOnly";
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
-  return <SessionProvider>{children}</SessionProvider>;
+  return (
+    <ClientOnly>
+      <SessionProvider>{children}</SessionProvider>
+    </ClientOnly>
+  );
 };
 export default Provider;
