@@ -19,6 +19,6 @@ const RoleBasedGuard = async ({ children, role }: RoleBasedGuardProps) => {
       </ClientOnly>
     );
 
-  return <AuthGuard>{children}</AuthGuard>;
+  return <>{children}</>;
 };
 export default RoleBasedGuard;
