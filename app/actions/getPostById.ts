@@ -16,7 +16,14 @@ export default async function getPostById(params: IParams) {
         user: true,
       },
     });
-    return post;
+    if (post) {
+      return {
+        ...post,
+        createdAt: post.createdAt.toISOString(),
+        expiresAt: post.expiresAt?.toISOString(),
+      };
+    }
+    return null;
   } catch (error: any) {
     throw new Error(error);
   }
