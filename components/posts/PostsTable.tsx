@@ -36,137 +36,149 @@ import {
 } from "@/components/ui/table";
 import { SafePost } from "@/types/prisma";
 import { fDate } from "@/lib/utils";
-
-export const columns: ColumnDef<SafePost>[] = [
-  {
-    accessorKey: "title",
-    header: ({ column }) => {
-      return (
-        // <Button
-        //   variant="ghost"
-        //   onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        // >
-        //   Email
-        //   <ArrowUpDown className="ml-2 h-4 w-4" />
-        // </Button>
-        <div className="text-left">Title</div>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="text-left font-medium">{row.getValue("title")}</div>
-    ),
-  },
-  {
-    accessorKey: "description",
-    header: ({ column }) => {
-      return <div className="text-left">Description</div>;
-    },
-    cell: ({ row }) => (
-      <Button variant={"outline"} size={"sm"}>
-        <Eye size={15} className=" mr-2" /> View
-      </Button>
-    ),
-  },
-  {
-    accessorKey: "location",
-    header: ({ column }) => {
-      return (
-        // <Button
-        //   variant="ghost"
-        //   onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        // >
-        //   Location
-        //   <ArrowUpDown className="ml-2 h-4 w-4" />
-        // </Button>
-        <div className="text-left">Location</div>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="text-left font-medium">{row.getValue("location")}</div>
-    ),
-  },
-  {
-    accessorKey: "duration",
-    header: () => <div className="text-left">Duration</div>,
-    cell: ({ row }) => {
-      return (
-        <div className="text-left font-medium capitalize">
-          {row.getValue("duration")}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "expiresAt",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Expires At
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <div className="text-left font-medium">
-          {fDate(row.getValue("expiresAt"))}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "createdAt",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Creatded At
-          <ArrowUpDown className="ml-2 h-4 w-4 " />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <div className="text-left font-medium">
-          {fDate(row.getValue("createdAt"))}
-        </div>
-      );
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-];
+import { useState } from "react";
+import { PostDescriptionDialog } from "./PostDescriptionModal";
 
 interface Props {
   data: SafePost[];
 }
 
 export function DataTable({ data }: Props) {
+  const [description, setDescription] = useState("");
+  const handleDescriptionView = (desc: string) => {
+    setDescription(desc);
+    setOpenDescription(true);
+  };
+
+  const columns: ColumnDef<SafePost>[] = [
+    {
+      accessorKey: "title",
+      header: ({ column }) => {
+        return (
+          // <Button
+          //   variant="ghost"
+          //   onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          // >
+          //   Email
+          //   <ArrowUpDown className="ml-2 h-4 w-4" />
+          // </Button>
+          <div className="text-left">Title</div>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="text-left font-medium">{row.getValue("title")}</div>
+      ),
+    },
+    {
+      accessorKey: "description",
+      header: ({ column }) => {
+        return <div className="text-left">Description</div>;
+      },
+      cell: ({ row }) => (
+        <Button
+          variant={"outline"}
+          size={"sm"}
+          onClick={() => handleDescriptionView(row.getValue("description"))}
+        >
+          <Eye size={15} className=" mr-2" /> View
+        </Button>
+      ),
+    },
+    {
+      accessorKey: "location",
+      header: ({ column }) => {
+        return (
+          // <Button
+          //   variant="ghost"
+          //   onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          // >
+          //   Location
+          //   <ArrowUpDown className="ml-2 h-4 w-4" />
+          // </Button>
+          <div className="text-left">Location</div>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="text-left font-medium">{row.getValue("location")}</div>
+      ),
+    },
+    {
+      accessorKey: "duration",
+      header: () => <div className="text-left">Duration</div>,
+      cell: ({ row }) => {
+        return (
+          <div className="text-left font-medium capitalize">
+            {row.getValue("duration")}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "expiresAt",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Expires At
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        return (
+          <div className="text-left font-medium">
+            {fDate(row.getValue("expiresAt"))}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "createdAt",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Creatded At
+            <ArrowUpDown className="ml-2 h-4 w-4 " />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        return (
+          <div className="text-left font-medium">
+            {fDate(row.getValue("createdAt"))}
+          </div>
+        );
+      },
+    },
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>View customer</DropdownMenuItem>
+              <DropdownMenuItem>View payment details</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
+  const [openDescription, setOpenDescription] = useState<boolean>(false);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -329,6 +341,13 @@ export function DataTable({ data }: Props) {
           </Button>
         </div>
       </div>
+      {description !== "" && (
+        <PostDescriptionDialog
+          description={description}
+          open={openDescription}
+          setOpen={setOpenDescription}
+        />
+      )}
     </div>
   );
 }
