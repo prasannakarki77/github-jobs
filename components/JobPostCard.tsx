@@ -5,6 +5,7 @@ import { fToNow, getInitials } from "@/lib/utils";
 import { Badge } from "./ui/badge";
 import { Globe } from "lucide-react";
 import { History } from "lucide-react";
+import Link from "next/link";
 interface JobPostCardProps {
   post: SafePost;
 }
@@ -31,9 +32,11 @@ const JobPostCard: React.FC<JobPostCardProps> = ({ post }) => {
       <div className=" flex gap-1 flex-1  sm:flex-row flex-col">
         <div className=" flex flex-col gap-2 items-start">
           <p className="font-bold text-sm">{user.name}</p>
-          <h2 className=" font-semibold text-slate-800 dark:text-white">
-            {title}
-          </h2>
+          <Link href={`/posts/${id}`}>
+            <h2 className=" font-semibold text-slate-800 dark:text-white">
+              {title}
+            </h2>
+          </Link>
           <Badge variant="secondary" className=" capitalize rounded">
             {duration}
           </Badge>
