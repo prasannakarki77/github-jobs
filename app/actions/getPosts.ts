@@ -1,8 +1,15 @@
 import prisma from "@/lib/prismadb";
 
-export default async function getPosts() {
+export interface IPostsParams {
+  query?: string;
+}
+
+export default async function getPosts({ query }: IPostsParams) {
   try {
     const posts = await prisma.posting.findMany({
+      where: {
+        title: { contains: query, mode: "insensitive" },
+      },
       orderBy: {
         createdAt: "desc",
       },

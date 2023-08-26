@@ -4,8 +4,13 @@ import EmptyState from "@/components/EmptyState";
 import JobPostCard from "@/components/JobPostCard";
 import SearchBar from "@/components/SearchBar";
 
-export default async function Home() {
-  const posts = await getPosts();
+interface HomeProps {
+  searchParams: { query?: string };
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  const posts = await getPosts(searchParams);
+  console.log(searchParams);
   if (posts.length === 0) {
     return (
       <ClientOnly>
