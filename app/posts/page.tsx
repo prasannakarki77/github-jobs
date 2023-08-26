@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 const Posts = async () => {
-  const posts = await getPosts();
+  const posts = await getPosts({});
 
   return (
     <div className=" ">

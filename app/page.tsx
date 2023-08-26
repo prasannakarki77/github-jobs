@@ -10,14 +10,7 @@ interface HomeProps {
 
 export default async function Home({ searchParams }: HomeProps) {
   const posts = await getPosts(searchParams);
-  console.log(searchParams);
-  if (posts.length === 0) {
-    return (
-      <ClientOnly>
-        <EmptyState />
-      </ClientOnly>
-    );
-  }
+
   return (
     <ClientOnly>
       <div className=" ">
@@ -25,11 +18,15 @@ export default async function Home({ searchParams }: HomeProps) {
           <SearchBar />
         </div>
 
-        <div className="flex flex-col gap-4">
-          {posts.map((post) => {
-            return <JobPostCard key={post.id} post={post} />;
-          })}
-        </div>
+        {posts.length === 0 ? (
+          <EmptyState />
+        ) : (
+          <div className="flex flex-col gap-4">
+            {posts.map((post) => {
+              return <JobPostCard key={post.id} post={post} />;
+            })}
+          </div>
+        )}
       </div>
     </ClientOnly>
   );
