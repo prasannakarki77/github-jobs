@@ -30,9 +30,9 @@ export default async function Home({ searchParams }: HomeProps) {
         <div className=" mb-6 bg-search-bg h-40 flex justify-center items-center px-10 ">
           <SearchBar />
         </div>
-        <div className=" grid md:grid-cols-12 gap-2">
-          <JobPostsFilter className="col-span-2" />
-          <div className="col-span-10"> {content}</div>
+        <div className=" grid md:grid-cols-12 gap-4">
+          <JobPostsFilter className="md:col-span-2" />
+          <div className="md:col-span-10"> {content}</div>
         </div>
       </div>
     </ClientOnly>

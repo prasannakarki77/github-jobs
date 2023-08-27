@@ -11,7 +11,11 @@ const SearchBar = () => {
   const router = useRouter();
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/?query=${query}`);
+    if (query) {
+      router.push(`/?query=${query}`);
+    } else {
+      router.push("/");
+    }
   };
   return (
     <form className="flex gap-2 max-w-xl flex-1" onSubmit={handleSearch}>
