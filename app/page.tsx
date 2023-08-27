@@ -1,4 +1,4 @@
-import getPosts from "./actions/getPosts";
+import getPosts, { IPostsParams } from "./actions/getPosts";
 import ClientOnly from "@/components/ClientOnly";
 import EmptyState from "@/components/EmptyState";
 import JobPostCard from "@/components/JobPostCard";
@@ -6,7 +6,7 @@ import JobPostsFilter from "@/components/JobPostsFilter";
 import SearchBar from "@/components/SearchBar";
 
 interface HomeProps {
-  searchParams: { query?: string };
+  searchParams: IPostsParams;
 }
 
 export default async function Home({ searchParams }: HomeProps) {
@@ -32,7 +32,7 @@ export default async function Home({ searchParams }: HomeProps) {
         </div>
         <div className=" grid md:grid-cols-12 gap-4">
           <JobPostsFilter className="md:col-span-2" />
-          <div className="md:col-span-10"> {content}</div>
+          <div className="md:col-span-10">{content}</div>
         </div>
       </div>
     </ClientOnly>
