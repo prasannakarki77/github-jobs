@@ -13,7 +13,14 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, Eye, MoreHorizontal } from "lucide-react";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  Eye,
+  MoreHorizontal,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -38,6 +45,9 @@ import { SafePost } from "@/types/prisma";
 import { fDate } from "@/lib/utils";
 import { useState } from "react";
 import { PostDescriptionDialog } from "./PostDescriptionModal";
+import axios from "axios";
+import { useToast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
 
 interface Props {
   data: SafePost[];
@@ -45,9 +55,27 @@ interface Props {
 
 export function DataTable({ data }: Props) {
   const [description, setDescription] = useState("");
+  const router = useRouter();
+  const { toast } = useToast();
   const handleDescriptionView = (desc: string) => {
     setDescription(desc);
     setOpenDescription(true);
+  };
+  const handleDelete = async (id: number) => {
+    console.log(id);
+    try {
+      await axios.delete(`/api/posts/${id}`);
+      toast({
+        variant: "default",
+        title: "Delete success",
+      });
+      router.refresh();
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Delete failed",
+      });
+    }
   };
 
   const columns: ColumnDef<SafePost>[] = [
@@ -170,8 +198,17 @@ export function DataTable({ data }: Props) {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>View customer</DropdownMenuItem>
-              <DropdownMenuItem>View payment details</DropdownMenuItem>
+              <DropdownMenuItem className="flex gap-2 items-center ">
+                <Pencil size={15} />
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex gap-2 items-center "
+                onClick={() => handleDelete(row.original.id)}
+              >
+                <Trash2 size={15} />
+                Delete
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );
