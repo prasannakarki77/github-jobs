@@ -15,7 +15,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import CustomTinyEditor from "./CustomTinyEditor";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -29,9 +29,10 @@ import {
 } from "../ui/select";
 import { useToast } from "../ui/use-toast";
 import axios from "axios";
+import { SafePost } from "@/types/prisma";
 interface JobPostingFormProps {
   isEdit?: boolean;
-  post?: Posting;
+  post?: SafePost;
 }
 
 const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
@@ -53,14 +54,20 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
     }),
     expiresAt: z.date(),
   });
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
+
+  const defaultValues = useMemo(
+    () => ({
       title: post?.title || "",
       description: post?.description || "",
       location: post?.location || "",
       duration: post?.duration || "",
-    },
+      expiresAt: (post?.expiresAt && new Date(post?.expiresAt)) || undefined,
+    }),
+    [post]
+  );
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: defaultValues,
   });
 
   const {
@@ -78,7 +85,7 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
     if (description !== "") {
       trigger("description");
     }
-  }, [description]);
+  }, [description, setValue, trigger]);
 
   const { toast } = useToast();
 
@@ -91,6 +98,7 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
         description: "You can now sign in to GitHub jobs.",
       });
       reset();
+      setValue("description", "");
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -119,6 +127,7 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
             />
             <FormField
               control={control}
+              defaultValue={post?.location}
               name="location"
               render={({ field }) => (
                 <FormItem>
@@ -136,7 +145,10 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Duration</FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={post?.duration || undefined}
+                  >
                     <FormControl>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select duration" />
@@ -154,7 +166,7 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
             />
 
             <FormField
-              control={form.control}
+              control={control}
               name="expiresAt"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-[0.8]">

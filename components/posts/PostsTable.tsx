@@ -66,8 +66,11 @@ export function DataTable({ data }: Props) {
   };
   const handleDelete = async (id: number) => {
     setSelectedId(id);
-
     setOpen(true);
+  };
+
+  const handleEdit = (id: number) => {
+    router.push(`/posts/edit/${id}`);
   };
 
   const onDelete = async () => {
@@ -206,7 +209,10 @@ export function DataTable({ data }: Props) {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="flex gap-2 items-center ">
+              <DropdownMenuItem
+                className="flex gap-2 items-center "
+                onClick={() => handleEdit(row.original.id)}
+              >
                 <Pencil size={15} />
                 Edit
               </DropdownMenuItem>
