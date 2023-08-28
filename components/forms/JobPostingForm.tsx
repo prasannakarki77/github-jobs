@@ -30,6 +30,7 @@ import {
 import { useToast } from "../ui/use-toast";
 import axios from "axios";
 import { SafePost } from "@/types/prisma";
+import { useRouter } from "next/navigation";
 interface JobPostingFormProps {
   isEdit?: boolean;
   post?: SafePost;
@@ -88,23 +89,45 @@ const JobPostingForm: React.FC<JobPostingFormProps> = ({ isEdit, post }) => {
   }, [description, setValue, trigger]);
 
   const { toast } = useToast();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    try {
-      await axios.post("/api/posts", data);
-      toast({
-        variant: "default",
-        title: "Jop Posted  Successful",
-        description: "You can now sign in to GitHub jobs.",
-      });
-      reset();
-      setValue("description", "");
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: error.response.data.message ?? "Posting Failed",
-        description: "Please try again!",
-      });
+    if (isEdit) {
+      try {
+        await axios.put(`/api/posts/${post?.id}`, data);
+        toast({
+          variant: "default",
+          title: "Update  Success",
+          description: "You can now sign in to GitHub jobs.",
+        });
+        router.refresh();
+        router.push("/posts");
+      } catch (error: any) {
+        toast({
+          variant: "destructive",
+          title: error.response.data.message ?? "Update Failed",
+          description: "Please try again!",
+        });
+      }
+    } else {
+      try {
+        await axios.post("/api/posts", data);
+        toast({
+          variant: "default",
+          title: "Jop Posted  Successful",
+          description: "You can now sign in to GitHub jobs.",
+        });
+        reset();
+        setValue("description", "");
+        router.refresh();
+        router.push("/posts");
+      } catch (error: any) {
+        toast({
+          variant: "destructive",
+          title: error.response.data.message ?? "Posting Failed",
+          description: "Please try again!",
+        });
+      }
     }
   };
   return (
