@@ -48,6 +48,7 @@ import { PostDescriptionDialog } from "./PostDescriptionModal";
 import axios from "axios";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import { ConfirmDialog } from "../ConfirmDialog";
 
 interface Props {
   data: SafePost[];
@@ -57,14 +58,21 @@ export function DataTable({ data }: Props) {
   const [description, setDescription] = useState("");
   const router = useRouter();
   const { toast } = useToast();
+  const [selectedId, setSelectedId] = useState<Number>();
+  const [open, setOpen] = useState(false);
   const handleDescriptionView = (desc: string) => {
     setDescription(desc);
     setOpenDescription(true);
   };
   const handleDelete = async (id: number) => {
-    console.log(id);
+    setSelectedId(id);
+
+    setOpen(true);
+  };
+
+  const onDelete = async () => {
     try {
-      await axios.delete(`/api/posts/${id}`);
+      await axios.delete(`/api/posts/${selectedId}`);
       toast({
         variant: "default",
         title: "Delete success",
@@ -385,6 +393,12 @@ export function DataTable({ data }: Props) {
           setOpen={setOpenDescription}
         />
       )}
+      <ConfirmDialog
+        description="Are you sure you want to delete ?"
+        onConfirm={onDelete}
+        open={open}
+        setOpen={setOpen}
+      />
     </div>
   );
 }
