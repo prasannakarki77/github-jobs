@@ -26,7 +26,6 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ClientOnly>
             <Navbar currentUser={currentUser} />
-
             <Toaster />
           </ClientOnly>
           <main className=" m-6  md:my-8 md:container">{children}</main>
