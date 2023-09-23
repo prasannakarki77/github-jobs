@@ -6,7 +6,7 @@ import ProfileDetails from "@/components/profile/ProfileDetails";
 const ProfilePage = async () => {
   const currentUser = await getCurrentUser();
   if (!currentUser) {
-    return <h1>No PRofile page</h1>;
+    return <h1>No Profile page</h1>;
   }
   return (
     <div className="container p-10 md:grid grid-cols-7 gap-4 ">

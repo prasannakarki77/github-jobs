@@ -21,7 +21,7 @@ const JobPostCard: React.FC<JobPostCardProps> = ({ post }) => {
             height={150}
             width={150}
             alt={user.id}
-            className="w-full"
+            className="w-full border-gray-100 shadow"
           />
         ) : (
           <p className="w-full h-full flex justify-center items-center font-bold text-xl">

@@ -70,7 +70,7 @@ const PostClient: React.FC<PostClientProps> = ({ post }) => {
                 height={60}
                 width={80}
                 alt={user.id}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover border-gray-100 shadow"
               />
             ) : (
               <p className=" w-full h-full flex justify-center items-center font-bold text-xl">
