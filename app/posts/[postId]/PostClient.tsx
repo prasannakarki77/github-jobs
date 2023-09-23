@@ -41,7 +41,7 @@ const PostClient: React.FC<PostClientProps> = ({ post }) => {
               className="text-blue-500 hover:underline font-medium"
             >
               {" "}
-              wes@kasisto.com
+              {user.email}
             </Link>
           </p>
         </div>

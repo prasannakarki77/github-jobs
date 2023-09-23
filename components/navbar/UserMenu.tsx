@@ -24,7 +24,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="relative">
+        <Avatar className="relative border-gray-100 shadow">
           {currentUser?.image ? (
             <AvatarImage src={currentUser?.image} alt="@shadcn" />
           ) : (
