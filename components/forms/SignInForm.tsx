@@ -55,7 +55,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ role }) => {
         ...data,
         redirect: false,
       });
-      if (callback?.ok) {
+      if (callback?.ok && !callback.error) {
         toast({
           variant: "default",
           title: "Logged In",

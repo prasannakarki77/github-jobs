@@ -14,14 +14,14 @@ const JobPostCard: React.FC<JobPostCardProps> = ({ post }) => {
   const { id, user, title, createdAt, duration, location } = post;
   return (
     <Card className="flex gap-3 p-3">
-      <div className=" bg-gray-300 dark:bg-slate-800 w-20 rounded-sm ">
+      <div className=" bg-gray-300 dark:bg-slate-800 w-20 rounded-sm bg-cover ">
         {user.image ? (
           <Image
             src={user.image}
             height={150}
-            width={150}
+            width={200}
             alt={user.id}
-            className="w-full border-gray-100 shadow"
+            className="w-full border-gray-100 shadow bg-cover h-full"
           />
         ) : (
           <p className="w-full h-full flex justify-center items-center font-bold text-xl">
