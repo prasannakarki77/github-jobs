@@ -41,7 +41,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { SafePost } from "@/types/prisma";
+import { SafePost, SafeUserPosts } from "@/types/prisma";
 import { fDate } from "@/lib/utils";
 import { useState } from "react";
 import { PostDescriptionDialog } from "./PostDescriptionModal";
@@ -51,7 +51,7 @@ import { useRouter } from "next/navigation";
 import { ConfirmDialog } from "../ConfirmDialog";
 
 interface Props {
-  data: SafePost[];
+  data: SafeUserPosts[];
 }
 
 export function DataTable({ data }: Props) {
@@ -89,7 +89,7 @@ export function DataTable({ data }: Props) {
     }
   };
 
-  const columns: ColumnDef<SafePost>[] = [
+  const columns: ColumnDef<SafeUserPosts>[] = [
     {
       accessorKey: "title",
       header: ({ column }) => {

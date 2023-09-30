@@ -14,3 +14,11 @@ export type SafePost = Omit<Posting, "expiresAt" | "createdAt" | "user"> & {
   expiresAt?: string;
   user: User;
 };
+
+export type SafeUserPosts = Omit<
+  Posting,
+  "expiresAt" | "createdAt" | "user"
+> & {
+  createdAt: string;
+  expiresAt?: string;
+};

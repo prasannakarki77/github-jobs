@@ -6,13 +6,14 @@ import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { PlusIcon } from "lucide-react";
+import getUserPosts from "../actions/getUserPosts";
 
 export const metadata: Metadata = {
   title: "Job Posts | GitHub Jobs",
 };
 
 const Posts = async () => {
-  const posts = await getPosts({});
+  const posts = await getUserPosts();
 
   return (
     <div className=" ">
