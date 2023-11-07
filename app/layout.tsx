@@ -6,12 +6,13 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import getCurrentUser from "./actions/getCurrentUser";
 import ClientOnly from "@/components/ClientOnly";
-import Provider from "@/components/Provider";
-import SearchBar from "@/components/SearchBar";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GitHub Jobs",
+  metadataBase: new URL("https://github-jobs-prasannakarki77.vercel.app/"),
+  title: "GitHub Jobs: Find your future jobs",
+  description: "Search various tech jobs on listed on GitHub Jobs",
 };
 
 export default async function RootLayout({
