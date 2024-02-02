@@ -11,14 +11,12 @@ interface RoleBasedGuardProps {
 
 const RoleBasedGuard = async ({ children, role }: RoleBasedGuardProps) => {
   const currentUser = await getCurrentUser();
+  if (currentUser && currentUser.role === role) return <>{children}</>;
 
-  if (currentUser && currentUser.role !== role)
-    return (
-      <ClientOnly>
-        <Forbidden403 hideSignIn />
-      </ClientOnly>
-    );
-
-  return <>{children}</>;
+  return (
+    <ClientOnly>
+      <Forbidden403 hideSignIn />
+    </ClientOnly>
+  );
 };
 export default RoleBasedGuard;
