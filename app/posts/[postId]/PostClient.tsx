@@ -23,7 +23,7 @@ const PostClient: React.FC<PostClientProps> = ({ post }) => {
 
   return (
     <div className="flex gap-8 flex-col md:flex-row">
-      <div className=" min-w-[200px] ">
+      <div className=" max-w-[300px] ">
         <Link href={"/"}>
           <button className="flex gap-2 text-blue-500 font-medium mb-9">
             <ArrowLeft /> Back to search
