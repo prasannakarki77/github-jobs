@@ -26,7 +26,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} min-h-screen bg-background font-sans>
-        <NextTopLoader />
+        <NextTopLoader color="#000" />
         <Provider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <ClientOnly>
