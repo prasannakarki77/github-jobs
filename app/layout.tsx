@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import getCurrentUser from "./actions/getCurrentUser";
 import ClientOnly from "@/components/ClientOnly";
 import Provider from "@/components/Provider";
+import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} min-h-screen bg-background font-sans>
+        <NextTopLoader />
         <Provider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <ClientOnly>
